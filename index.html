@@ -1,0 +1,358 @@
+<head>
+    <title>Cultural Interfaces</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@4.2.1/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script>
+        AFRAME.registerComponent('play'), {
+            init: function () {
+                var myEL = document.querySelector('#musicbox');
+                this.el.addEventListener('click', function() {
+                    myEL.components.sound.playSound();
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+    <a-scene>
+        
+        <!-- Asset Library -->
+        <a-assets>
+            <audio id="song" src="assets/04_Tiger_King_compressed.mp3"></audio>
+            <a-asset-item id="paper" src="assets/Crumpled+Paper.obj"></a-asset-item>
+            <img id="jwimage" src="assets/jeanette-winterson.jpg">
+            <img id="rocket" src="assets/rocket.jpg">
+            <img id="city" src="assets/max-ostwalt-HaD7cgoPL60-unsplash.jpg">
+            <img id="lake" src="assets/ihor-malytskyi-rR8xBouCUn0-unsplash.jpg">
+            <img id="shadow" src="assets/gryffyn-m-FsMuoi7IeZg-unsplash.jpg">
+            <img id="poll" src="assets/dzha-y8R1k4e4pEg-unsplash.jpg">
+            <img id="protest" src="assets/mike-von-IpXoieawK14-unsplash.jpg">
+        </a-assets>
+        
+        <!-- Camera & Cursor -->
+        <a-entity position="0 0 1" camera look-controls="pointerLockEnabled: true" wasd-controls="acceleration:100; easing: 15">
+            <a-camera id="cam" fov=70>
+            <a-cursor color="#F28705"></a-cursor>
+            </a-camera>
+        </a-entity>
+        
+        <!-- Objects & Models -->
+        <a-entity obj-model="obj: #paper"
+                  position="2 0.5 -2"
+                  scale="3 3 3"
+                  shadow>
+        </a-entity>
+        <a-box position="-2 1.5 -2"
+               rotation="45 45 0"
+               color="#F27405"
+               scale="1.5 1.5 1.5"
+               shadow
+               animation="property: rotation; from: 45 45 45; to: 45 405 45; dur: 20000; dir: normal; easing: linear; loop: true"
+               wireframe="true"
+               wireframe-linewidth="10">
+        </a-box>
+        
+        <a-sphere position="0 1.25 -5"
+                  radius="1.25"
+                  color="#EF2D5E"
+                  shadow
+                  metalness="0.8">
+        </a-sphere>
+        
+        <a-cylinder position="1.7 1 -3"
+                    rotation="30 90 45"
+                    radius="0.5"
+                    height="2.5"
+                    color="#586B73"
+                    shadow
+                    metalness="1"
+                    animation="property: position; from: 1.7 1.2 -3; to: 1.7 1 -3; dur: 2000; dir: alternate; easing: easeInOutQuad; loop: true">
+        </a-cylinder>
+        
+        <a-plane src="assets/jeanette-winterson.jpg"
+                 scale="4 4 1"
+                 position="-3 2.5 -4"
+                 rotation="0 45 0"
+                 width="1"
+                 height="0.67"
+                 color="#BDBDBD"
+                 roughness="1"
+                 shadow="receive: true">
+        </a-plane>
+        <a-box id="musicbox" position="6 0.5 2" sound="src: #song; on: click; refDistance: 4; loop: true" wireframe="true" metalness="1">
+            <a-entity position="-5.9 2.5 -6" scale="2 2 1" look-at="#cam"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Bold.json;
+                  shader: msdf;
+                  wrapCount: 20;
+                  value: \nSTART THE DESCENT; align: center"
+                  geometry="primitive: plane; width: auto; height: auto"
+                  material="color: #1B3E59; shader: flat"
+                  event-set__enter="_event: mouseenter; text.color: #FFAC00"
+                  event-set__leave="_event: mouseleave; text.color: #FFFFFF"
+                      event-set__start="_event: click; _target: #lookright; visible: true"
+                  play
+                  animation="property: position; from: -5.9 2.5 -6; to: -5.9 2.6 -6; dur: 2500; dir: alternate; easing: easeInOutQuad; loop: true"
+                      event-set__newline="_event: click; _target: #line1; visible: true">
+            </a-entity>
+        </a-box>
+        <!-- a-image src="#jwimage"
+                 scale="4 4 1"
+                 position="-3 2.5 -4"
+                 rotation="0 45 0"
+                 width="1"
+                 height="0.67"
+                 shadow="receive: true">
+        </a-image -->
+        
+        <!-- Text Boxes -->
+        <a-entity position="-3.5 3.7 -3" scale="1.5 1.5 1"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 20;
+                  value: \nGut Symmetries by Jeanette Winterson; align: center"
+                  geometry="primitive: plane; width: auto; height: auto"
+                  material="color: #474747; shader: flat"
+                  rotation="0 45 0">
+        </a-entity>
+        <a-entity position="2 3 -2" scale="1 1 1"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 20;
+                  value: \ncreated by aman.; align: center"
+                  geometry="primitive: plane; width: auto; height: auto"
+                  material="color: #730202; shader: flat"
+                  rotation="0 -45 0">
+        </a-entity>
+        <a-entity position="0.1 2 -3" scale="1.5 1.5 1" look-at="#cam"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 25;
+                  value: \nWalk with WASD keys \nLook around with mouse; align: center">
+        </a-entity>
+        <a-entity id="lookright" position="0.1 2 -1" scale="1.5 1.5 1" look-at="#cam" visible="false"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 25;
+                  value: \nLook to your right-->; align: center">
+        </a-entity>
+        <a-entity position="0.1 3.2 -3" scale="1.5 1.5 1" look-at="#cam"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 25;
+                  value: \nan interactive poetry; align: center; color: #CDCDCD">
+        </a-entity>
+        
+        <!-- Poetry Lines -->
+        <a-entity id="line1" position="2 2 1.5" scale="1 1 1" rotation="0 -90 0"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 30;
+                  value: \nWalk with me, \nhand in hand through the neon and styrofoam."
+                  visible="false"
+                  event-set__enter="_event: mouseenter; text.color: #FFAC00"
+                  event-set__leave="_event: mouseleave; text.color: #FFFFFF"
+                  event-set__newline="_event: click; _target: #line2; visible: true"
+                  geometry="primitive: plane; width: auto; height: auto"
+                  material="color: #0A1747; shader: flat">
+            <a-image src="#city"
+                     width=1
+                     height=1.51
+                     position="-2 -0.5 -8"
+                     rotation="0 30 0"
+                     scale="2 2 1"
+                     color="#7E7E7E">
+            </a-image>
+        </a-entity>
+        <a-entity id="line2" position="1.5 2 2.5" scale="1 1 1" rotation="0 -135 0"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 30;
+                  value: \nWalk the razor blades and the broken hearts. \nWalk the fortune and the fortune hunted."
+                  visible="false"
+                  event-set__enter="_event: mouseenter; text.color: #FFAC00"
+                  event-set__leave="_event: mouseleave; text.color: #FFFFFF"
+                  event-set__newline="_event: click; _target: #line3; visible: true"
+                  geometry="primitive: plane; width: auto; height: auto"
+                  material="color: #0A1747; shader: flat">
+            <a-image src="#lake"
+                     width=1
+                     height=0.675
+                     position="-2 -0.5 -8"
+                     rotation="0 30 0"
+                     scale="4 4 1"
+                     color="#7E7E7E">
+            </a-image>
+        </a-entity>
+        <a-entity id="line3" position="0 2 2.8" scale="1 1 1" rotation="0 -180 0"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 30;
+                  value: \nWalk the chop suey bars and the tract of stars. \nI know I am a fool, hoping dirt and glory are both a kind of luminous paint \nthe humiliations and exaltations that light us up."
+                  visible="false"
+                  event-set__enter="_event: mouseenter; text.color: #FFAC00"
+                  event-set__leave="_event: mouseleave; text.color: #FFFFFF"
+                  event-set__newline="_event: click; _target: #line4; visible: true"
+                  geometry="primitive: plane; width: auto; height: auto"
+                  material="color: #0A1747; shader: flat">
+            <a-image src="#shadow"
+                     width=1
+                     height=1.5
+                     position="-5 -0.5 -9"
+                     rotation="0 40 0"
+                     scale="4 4 1"
+                     color="#7E7E7E">
+            </a-image>
+        </a-entity>
+        <a-entity id="line4" position="-1.5 2 2.5" scale="1 1 1" rotation="0 -225 0"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 30;
+                  value: \nI see like a bug, everything too large, the pressure of infinity hammering at my head."
+                  visible="false"
+                  event-set__enter="_event: mouseenter; text.color: #FFAC00"
+                  event-set__leave="_event: mouseleave; text.color: #FFFFFF"
+                  event-set__newline="_event: click; _target: #line5; visible: true"
+                  geometry="primitive: plane; width: auto; height: auto"
+                  material="color: #0A1747; shader: flat">
+            <a-image src="#poll"
+                     width=1
+                     height=1.57
+                     position="4 -0.5 -9"
+                     rotation="0 -45 0"
+                     scale="4 4 1"
+                     color="#7E7E7E">
+            </a-image>
+        </a-entity>
+        
+        <a-entity id="line5" position="-1 1 2.5" scale="1 1 1" rotation="-10 -205 0"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 30;
+                  value: \nBut how else to live, vertical that I am, pressed down and pressing up simultaneously?"
+                  visible="false"
+                  event-set__enter="_event: mouseenter; text.color: #FFAC00"
+                  event-set__leave="_event: mouseleave; text.color: #FFFFFF"
+                  event-set__newline="_event: click; _target: #line6; visible: true"
+                  geometry="primitive: plane; width: auto; height: auto"
+                  material="color: #240040; shader: flat">
+            <a-image src="#protest"
+                     width=1
+                     height=1.5
+                     position="4 2 -9"
+                     rotation="10 0 0"
+                     scale="3 3 1"
+                     color="#7E7E7E">
+            </a-image>
+        </a-entity>
+        
+        <a-entity id="line6" position="0 1 2.55" scale="1 1 1" rotation="-30 -180 0"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 30;
+                  value: \nI cannot assume you will understand me. \nIt is just as likely that as I invent what I want to say, you will invent what you want to hear."
+                  visible="false"
+                  event-set__enter="_event: mouseenter; text.color: #FFAC00"
+                  event-set__leave="_event: mouseleave; text.color: #FFFFFF"
+                  event-set__newline="_event: click; _target: #line7; visible: true"
+                  geometry="primitive: plane; width: auto; height: auto"
+                  material="color: #240040; shader: flat">
+        </a-entity>
+        
+        <a-entity id="line7" position="1.5 1 2" scale="1 1 1" rotation="-45 -135 0"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 30;
+                  value: \nSome story we must have. \nStray words on crumpled paper."
+                  visible="false"
+                  event-set__enter="_event: mouseenter; text.color: #FFAC00"
+                  event-set__leave="_event: mouseleave; text.color: #FFFFFF"
+                  event-set__newline="_event: click; _target: #line8; visible: true"
+                  geometry="primitive: plane; width: auto; height: auto"
+                  material="color: #240040; shader: flat">
+            <a-entity light="type: point; intensity: 2.18; distance: 0.69; decay: 0.33" position="-0.33763 -0.52603 -0.13301">
+        </a-entity>
+            <a-entity obj-model="obj: #paper"
+                  position="-0.09084 -0.42913 -0.78415"
+                  scale="2 2 2"
+                  shadow>
+        </a-entity>
+        </a-entity>
+        
+        <a-entity id="line8" position="1.5 1.5 2" scale="1 1 1" rotation="0 -135 0"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 30;
+                  value: \nA weak signal into the outer space of each other. \nThe probability of separate worlds meeting is very small."
+                  visible="false"
+                  event-set__enter="_event: mouseenter; text.color: #FFAC00"
+                  event-set__leave="_event: mouseleave; text.color: #FFFFFF"
+                  event-set__newline="_event: click; _target: #line9; visible: true"
+                  geometry="primitive: plane; width: auto; height: auto"
+                  material="color: #490080; shader: flat">
+            <a-entity light="type: point; intensity: 3.12; distance: 2.16; decay: 0.21" position="9.67253 -0.73629 -11.62368">
+        </a-entity>
+        </a-entity>
+        
+        <a-entity id="line9" position="0 1.5 10" scale="2 2 1" rotation="0 -180 0"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 30;
+                  value: \nThe lure of it is immense."
+                  visible="false"
+                  event-set__enter="_event: mouseenter; text.color: #FFAC00"
+                  event-set__leave="_event: mouseleave; text.color: #FFFFFF"
+                  event-set__newline="_event: click; _target: #line10; visible: true"
+                  geometry="primitive: plane; width: auto; height: auto"
+                  material="color: #490080; shader: flat; visible: false">
+        </a-entity>
+        
+        <a-entity id="line10" position="0 6 12" scale="8 8 1" rotation="60 -180 0"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Regular.json;
+                  shader: msdf;
+                  wrapCount: 30;
+                  value: \nWe send starships. \nWe fall in love."
+                  visible="false"
+                  event-set__enter="_event: mouseenter; text.color: #E64932"
+                  event-set__leave="_event: mouseleave; text.color: #FFFFFF"
+                  event-set__newline="_event: click; _target: #end; visible: true"
+                  geometry="primitive: plane; width: auto; height: auto"
+                  material="color: #490080; shader: flat; visible: false">
+            <a-image src="#rocket"
+                     width=1
+                     height=0.67
+                     scale="1.5 1.5 1"
+                     position="0 0 -5">
+            </a-image>
+        </a-entity>
+        
+        <a-entity id="end" position="0 10 12" scale="2 2 1" rotation="60 -180 0"
+            text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Bold.json;
+                  shader: msdf;
+                  wrapCount: 40;
+                  value: \nthank you \ncreated by aman. \na new media assignment \nDepartment of Design, IIT Guwahati; color: #1C1C1C; align: center"
+                  visible="false"
+                  event-set__enter="_event: mouseenter; scale: 7 7 1; text.color: #FFFFFF"
+                  event-set__leave="_event: mouseleave; scale: 2 2 1; text.color: #1C1C1C"
+                  geometry="primitive: plane; width: auto; height: auto"
+                  material="color: #490080; shader: flat; visible: false"
+                  link="href: https://www.behance.net/ishdoot">
+            <a-entity position="0 0.2 0" text="font: https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/anonymouspro/AnonymousPro-Bold.json;
+                  shader: msdf;
+                  wrapCount: 40;
+                  value: \nmusic - Tiger King from Disco Elysium; color: #1C1C1C; align: center">
+            </a-entity>
+        </a-entity>
+        
+        <!-- Lights -->
+        <a-entity light="type: point; intensity: 2.5; distance: 50; decay: 2; castShadow: true"
+                  position="0 0.5 -1">
+        </a-entity>
+        
+        <!-- Environment -->
+        <a-entity environment="preset: starry"
+                  shadow="receive: true">
+        </a-entity>
+    </a-scene>
+</body>
